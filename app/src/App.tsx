@@ -23,12 +23,15 @@
     + Viết 1 context khác quản lí theme (dark, light mode)
     + sẽ viết 1 chút testing đơn giản cho thử thách này
 */
-import './App.css'
+import { UserList } from './features/user'
+import AppLayout from './layout/AppLayout'
 
 function App() {
 
   return (
-    <></>
+    <AppLayout>
+      <UserList />
+    </AppLayout>
   )
 }
 
