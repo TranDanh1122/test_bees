@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logic Test Bees Group</title>
+</head>
+<style>
+    .main {
+        width: 100%;
+        height: 100%;
+        min-height: 100vh;
+
+    }
+
+    .flex-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+    }
+
+    #resumeIcon {
+        size: 0;
+        border: transparent 5px solid;
+        border-left-color: black;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    #cancel {
+        border-radius: 100%;
+        color: white;
+        background: #000;
+    }
+</style>
+
+<body>
+    <main class="main flex-item">
+        <span>Proccess:</span>
+        <progress id="progress" min="0" max="99" step="1" value="2"></progress>
+        <button id="pause">||</button>
+        <button id="resume" class="flex-item">
+            <div id="resumeIcon"></div>
+        </button>
+        <button id="cancel" class="flex-item">
+            x
+        </button>
+    </main>
+</body>
+<script src="./logic.js"></script>
+<script>
+    let progress = document.getElementById("progress")
+    let pauseBtn = document.getElementById("pause")
+    let resumeBtn = document.getElementById("resume")
+    let cancelBtn = document.getElementById("cancel")
+    const delay = 1000
+    //khởi tạo giao diện
+    const toogleBtn = (isPausing) => {
+        pauseBtn.classList.toggle("hidden", isPausing)
+        resume.classList.toggle("hidden", !isPausing)
+    }
+    toogleBtn(false)
+    // callback action
+    coreProcess.callback = (value) => {
+        console.log(value);
+        progress.setAttribute("value", value)
+    }
+    //bắt đầu chạy
+    coreProcess.processWithDelayV2(Array.from({ length: 100 }, (_, i) => i), delay)
+
+    //pause action 
+    pauseBtn.addEventListener("click", () => {
+        toogleBtn(true)
+        coreProcess.setPause(true)
+    })
+
+    //resume action
+    resumeBtn.addEventListener("click", () => {
+        toogleBtn(false)
+        coreProcess.setPause(false)
+        coreProcess.resume(delay)
+    })
+
+    cancelBtn.addEventListener("click", () => {
+        coreProcess.cancel()
+    })
+
+</script>
+
+</html>
