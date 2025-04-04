@@ -4,6 +4,7 @@ import { TUser, UserListAction, UserListFooter } from "@/features/user"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label";
 import UserTableItem from "../components/UserTableItem";
+import { useGetUserQuery } from "../queries/useUserQuery";
 const FakeUsers: TUser[] = [
     {
         id: "123erfv",
