@@ -8,6 +8,11 @@ import {
 interface Props {
     date: Date
 }
+/**
+ * React component cho phần hiển thị ngày đăng kí cho mỗi người dùng
+ * @prop {Date} date: ngày đăng kí của người dùng
+ * 
+ */
 export default React.memo(function RegisterDate({ date }: Props): React.JSX.Element {
     const [registerDate, registerTime] = React.useMemo(() => {
         const [dateStr, timeStr] = new Date(date).toISOString().split("T")

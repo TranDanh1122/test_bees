@@ -1,5 +1,9 @@
 import { Input } from "@/components/ui/input";
 import React from "react";
+/**
+ * React component hiển thị input search
+ * 
+ */
 export default function Search(): React.JSX.Element {
     console.log("re-render");
 

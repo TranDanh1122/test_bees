@@ -1,5 +1,9 @@
 import React from "react";
 import { List, Table } from "lucide-react";
+/**
+ * React component chọn view mode
+ *  
+ */
 export default function ViewMode(): React.JSX.Element {
     return (
         <div className="flex items-center gap-2">

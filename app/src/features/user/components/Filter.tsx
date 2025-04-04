@@ -11,6 +11,10 @@ interface Props {
     label: string,
     values: values[]
 }
+/**
+ * React component chọn 1 hoặc nhiều filter cho user list
+ *  
+ */
 export default function Filter({ label, values }: Props): React.JSX.Element {
     return (
         <DropdownMenu>

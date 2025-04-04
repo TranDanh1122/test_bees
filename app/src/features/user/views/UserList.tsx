@@ -4,24 +4,6 @@ import { TUser, UserListAction, UserListContext, UserListFooter } from "@/featur
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label";
 import UserTableItem from "../components/UserTableItem";
-const FakeUsers: TUser[] = [
-    {
-        id: "123erfv",
-        name: "Danh",
-        balance: 90.8,
-        email: "trandanh14042000@gmail.com",
-        registerAt: new Date(),
-        active: true
-    },
-    {
-        id: "123e345thrfv",
-        name: "Trần",
-        balance: 910.81,
-        email: "trandanh14042000@gmail.com",
-        registerAt: new Date(),
-        active: false
-    }
-]
 export default function UserList(): React.JSX.Element {
     const { state } = React.useContext(UserListContext)
     return (<>
@@ -66,7 +48,7 @@ export default function UserList(): React.JSX.Element {
                     {
                         !state.loading &&
                         state.result &&
-                        state.result.map(el => <UserTableItem key={el.id} user={el} />)
+                        state.result.map((el: TUser) => <UserTableItem key={el.id} user={el} />)
                     }
                 </TableBody>
 

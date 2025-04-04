@@ -9,7 +9,10 @@ import {
     PaginationPrevious,
 } from "@/components/ui/pagination"
 
-
+/**
+ * React component render phần chọn trang / phân trang
+ *  
+ */
 export default React.memo(function Paginate(): React.JSX.Element {
     return (
         <Pagination className="w-fit mx-0 [&__a]:cursor-pointer [&__a]:border">

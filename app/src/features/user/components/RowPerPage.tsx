@@ -7,6 +7,10 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label";
+/**
+ * 
+ *  React component cho phần chọn số lượng hàng hiển thị trên 1 trang
+ */
 export default function RowPerPage(): React.JSX.Element {
     return (
         <Select defaultValue="10">
