@@ -1,5 +1,5 @@
 import React from "react"
-import { UserListState, UserListActionType, TUser } from "@/features/user"
+import { UserListState, UserListActionType, TUser, useGetUserQuery } from "@/features/user"
 import { filter } from "@/lib/filter"
 /**
  reducer này sẽ nhận vào 1 state và 1 action, sau đó sẽ thực hiện hành động tương ứng với action.type
@@ -74,6 +74,21 @@ const reducer = (state: UserListState, action: UserListActionType) => {
     }
 }
 export default function useUserList(initData: UserListState) {
+    const { data: users, isLoading, error } = useGetUserQuery()
     const [state, dispatch] = React.useReducer(reducer, initData)
+    React.useEffect(() => { //set lại user khi có dữ liệu mới từ api
+        if (users) {
+            dispatch({
+                type: "initData",
+                payload: { users: users.users ?? [], total: users.total ?? 0 },
+            });
+        }
+    }, [users]);
+    React.useEffect(() => { //set lại status khi có sự cập nhật loading / error
+        dispatch({
+            type: "setStatus",
+            payload: { loading: isLoading, error: error != null },
+        });
+    }, [isLoading, error]);
     return { state, dispatch }
 }

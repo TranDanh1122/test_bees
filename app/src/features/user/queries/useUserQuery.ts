@@ -7,6 +7,10 @@ interface TUserResponse {
     users: TUser[],
     total: number
 }
+/**
+ * Custom Hook Query của tanstack react-query để lấy danh sách người dùng từ API
+ * @returns { users: TUser[], total: number } : danh sách user và tổng số user
+ */
 export const useGetUserQuery = () => useQuery({
     queryKey: ['users'],
     queryFn: async (): Promise<TUserResponse> => {
