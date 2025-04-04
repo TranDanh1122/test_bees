@@ -9,7 +9,7 @@ export default function AppLayout({ children }: Props): React.JSX.Element {
     const queryClient = new QueryClient
     return (
         <QueryClientProvider client={queryClient} >
-            <div className="min-w-screen min-h-screen relative">
+            <div className="min-w-screen min-h-screen relative overflow-hidden">
                 <picture className="w-full h-80 absolute top-0 left-0">
                     <source media="(max-width:767px)" srcSet="assets/bg-light-mobile.jpg" />
                     <source media="(min-width:768px)" srcSet="assets/bg-light.jpg" />

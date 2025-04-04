@@ -17,6 +17,8 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 { type: state.sort, key: "name" },
                 state.filter as unknown as { [key: string]: any[] })
+                console.log("action.payload.users", result);
+                
             return { ...state, result: result, users: action.payload.users, total: total, numberOfPage: numberOfPage }
         }
         case "setStatus": {

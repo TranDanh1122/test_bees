@@ -5,7 +5,7 @@ import {
     ViewMode,
 } from "@/features/user"
 const StatusFilter = [{ text: "Inactive", value: false }, { text: "Active", value: true }]
-export default function UserListAction(): React.JSX.Element {
+export default React.memo(function UserListAction(): React.JSX.Element {
     return <div className="w-full bg-white rounded-sm p-5 space-y-3">
         <p className="text-neutral-500 font-semibold">Here's a list of users in your system!!!</p>
         <div className=" flex items-start justify-between">
@@ -16,4 +16,4 @@ export default function UserListAction(): React.JSX.Element {
             <ViewMode />
         </div>
     </div>
-}
+})

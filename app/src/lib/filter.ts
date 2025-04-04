@@ -20,17 +20,18 @@ export function filter<T extends Record<string, any>>(
         if (page < 1 || limit < 1) return { result: [], total: 0, numberOfPage: 0 }
 
         let result: T[] = [...data]
-
+        
         //Filter 
         if (filter) {
             for (const key in filter) {
-                if (filter[key]) {
+                if (filter[key].length > 0) {
                     result = result.filter((el: T) => {
                         return filter[key].some((val: any) => val === el[key]);
                     });
                 }
             }
         }
+
         //Search
         if (search) {
             result = result.filter(el => {
@@ -47,7 +48,7 @@ export function filter<T extends Record<string, any>>(
                 return typeof a[key] == "string" ? a[key].localeCompare(b[key]) : a[key] - b[key];
             return typeof a[key] == "string" ? b[key].localeCompare(a[key]) : b[key] - a[key];
         });
-
+        
         const total = result.length
 
         if (total == 0) return { result, total: 0, numberOfPage: 0 }
