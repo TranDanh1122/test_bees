@@ -25,7 +25,9 @@ export function filter<T extends Record<string, any>>(
         if (filter) {
             for (const key in filter) {
                 if (filter[key].length > 0) {
+
                     result = result.filter((el: T) => {
+                        console.log(key, "1234");
                         return filter[key].some((val: any) => val === el[key]);
                     });
                 }

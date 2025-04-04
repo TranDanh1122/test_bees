@@ -17,8 +17,8 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 { type: state.sort, key: "name" },
                 state.filter as unknown as { [key: string]: any[] })
-                console.log("action.payload.users", result);
-                
+            console.log("action.payload.users", result);
+
             return { ...state, result: result, users: action.payload.users, total: total, numberOfPage: numberOfPage }
         }
         case "setStatus": {
@@ -37,20 +37,22 @@ const reducer = (state: UserListState, action: UserListActionType) => {
         }
         case "setFilterStatus": {
             let newStatusFilter = [...state.filter.active]
+
             if (state.filter.active.some(el => el == action.payload)) {
                 newStatusFilter = state.filter.active.filter(el => el != action.payload)
             } else {
                 newStatusFilter = [...state.filter.active, action.payload]
             }
-            const newFilter = { ...state.filter, status: newStatusFilter }
+
+            const newFilter = { ...state.filter, active: newStatusFilter }
             const { result, numberOfPage, total } = filter<TUser>(
                 state.users,
-                state.page,
+                1,
                 state.limit,
                 state.search,
                 { type: state.sort, key: "name" },
                 newFilter as unknown as { [key: string]: any[] })
-            return { ...state, total: total, numberOfPage: numberOfPage, result: result, filter: newFilter }
+            return { ...state, total: total, numberOfPage: numberOfPage, result: result, filter: newFilter, page : 1 }
 
         }
         case "goToPage": {

@@ -15,7 +15,7 @@ import { UserListContext } from "@/features/user";
  *  
  */
 export default React.memo(function Paginate(): React.JSX.Element {
-    const { state, dispatch } = React.useContext(UserListContext)
+    const { state, dispatch } = React.useContext(UserListContext)    
     const goToPage = (page: number) => {
         if (page >= 1 && page <= state.numberOfPage && page !== state.page) {
             dispatch({ type: "goToPage", payload: page });
