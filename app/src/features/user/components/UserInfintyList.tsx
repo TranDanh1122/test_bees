@@ -3,8 +3,7 @@ import { FixedSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 import { TUser, useUserListAction, UserListItem } from "@/features/user";
 import { useDebound } from "@/hooks/useDebound";
-import { Skeleton } from "@/components/ui/skeleton";
-
+import { UserItemSkeleton } from "@/features/user/components/skeleton/ListUI"
 export default function UserInfintyList(): React.JSX.Element {
     const { state, goToPage, dispatch } = useUserListAction()
     const timeoutRef = React.useRef<number | null>(null)
@@ -50,13 +49,11 @@ export default function UserInfintyList(): React.JSX.Element {
                         const user = users[index]
                         return <div style={style} key={index}>
                             {user &&
-                                <React.Suspense fallback={<UserListItemSkeleton />}>
-                                    <UserListItem user={users[index]} />
-                                </React.Suspense>
+                                <UserListItem user={users[index]} />
                             }
                             {
-                                !user &&
-                                <div className="rounded-full animate-spin border-s-2 border-s-neutral-600 size-10 mx-auto"></div>
+                                !user && <UserItemSkeleton />
+
                             }
                         </div>
                     }}
@@ -65,17 +62,4 @@ export default function UserInfintyList(): React.JSX.Element {
         </InfiniteLoader>
 
     )
-}
-const UserListItemSkeleton = () => {
-    return <div className="shadow-md h-[140px] border">
-        <div className="flex items-center space-x-4 w-full ">
-            <Skeleton className="h-12 w-12 rounded-full" />
-            <div className="space-y-2">
-                <Skeleton className="h-4 w-[250px]" />
-                <Skeleton className="h-4 w-[200px]" />
-            </div>
-        </div>
-        <Skeleton className="h-4 w-[200px]" />
-    </div>
-
 }

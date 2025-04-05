@@ -3,9 +3,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { TUser, UserListContext, UserListFooter, UserTableItem } from "@/features/user"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label";
-import { Skeleton } from "@/components/ui/skeleton"
-import { UseListFooterSkeleton } from "../views/UseListFooter";
-
 export default function UserTable(): React.JSX.Element {
     const { state } = React.useContext(UserListContext)
     return (<>
@@ -25,63 +22,25 @@ export default function UserTable(): React.JSX.Element {
             </TableHeader>
             <TableBody>
                 {
-                    state.loading ?
-                        <TableSkeleton limit={state.limit} />
-                        : (
-                            <React.Suspense fallback={<TableSkeleton limit={state.limit} />}>
+                    !state.result &&
+                    <TableRow aria-colspan={6}>
+                        <TableCell colSpan={6}>
+                            <p className="text-center"> No data</p>
+                        </TableCell>
+                    </TableRow>
 
-                                {
-                                    !state.result &&
-                                    <TableRow aria-colspan={6}>
-                                        <TableCell colSpan={6}>
-                                            <p className="text-center"> No data</p>
-                                        </TableCell>
-                                    </TableRow>
-
-                                }
-                                {
-                                    state.result &&
-                                    state.result.map((el: TUser) => <UserTableItem key={el.id} user={el} />)
-                                }
-
-                            </React.Suspense>
-                        )
+                }
+                {
+                    state.result &&
+                    state.result.map((el: TUser) => <UserTableItem key={el.id} user={el} />)
                 }
 
             </TableBody>
         </Table>
-        {!state.loading ? (
-            <React.Suspense fallback={<UseListFooterSkeleton />}>
-                <UserListFooter />
-            </React.Suspense>
-        ) : (
-            <UseListFooterSkeleton />
-        )}
+
+
+        <UserListFooter />
+
 
     </>)
-}
-const TableSkeleton = ({ limit }: { limit: number }) => {
-    return (
-        <>
-            {
-                Array.from({ length: limit }).map((_, i) => (
-                    <TableRow key={i} className="min-h-[40px] max-h-[40px]">
-                        {
-                            Array.from({ length: 6 }).map((_, index: number) => (
-                                <TableCell key={index} className={index == 0 ? "flex gap-2" : ""}>
-                                    {
-                                        index == 0 && <Skeleton className="size-6 rounded-full" />
-
-                                    }
-                                    <Skeleton className="h-[20px] w-full" />
-                                </TableCell>
-                            ))
-                        }
-                    </TableRow>
-                ))
-            }
-        </>
-    )
-
-
 }
