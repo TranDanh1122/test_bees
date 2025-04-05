@@ -5,7 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label";
 import UserTableItem from "../components/UserTableItem";
 export default function UserList(): React.JSX.Element {
-    const { state } = React.useContext(UserListContext)
+    const { state } = React.useContext(UserListContext)    
     return (<>
         <UserListAction />
         <div className="bg-white shadow-2xl rounded-md p-5">
