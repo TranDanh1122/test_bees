@@ -12,7 +12,6 @@ const defaultState: UserListState = {
     limit: 10,
     loading: true,
     error: false,
-
 }
 export const UserListContext = React.createContext<{ state: UserListState, dispatch: React.Dispatch<UserListActionType> }>({ state: defaultState, dispatch: () => { } })
 export default function UserListContextProvider({ children }: { children: React.ReactNode }) {

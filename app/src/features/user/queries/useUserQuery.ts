@@ -23,7 +23,8 @@ export const useGetUserQuery = () => useQuery({
                 balance: el.height + el.weight,
                 email: el.email,
                 registerAt: new Date(el.birthDate),
-                active: Math.random() > 0.5
+                active: Math.random() > 0.5,
+                image : el.image
             }
         })
         return { users: formatedUser, total: data.total }

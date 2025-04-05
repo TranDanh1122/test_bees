@@ -13,5 +13,8 @@ export const useDebound = (callback: (...args: any) => void, delay: number) => {
             callback(...args)
         }, delay)
     }
+    React.useEffect(() => {
+        return () => { if (deboundRef.current) clearTimeout(deboundRef.current) }
+    })
     return handler
 }

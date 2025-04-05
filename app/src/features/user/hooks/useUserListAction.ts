@@ -13,5 +13,5 @@ export const useUserListAction = () => {
     }, [state.numberOfPage, state.page, dispatch])
     const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => dispatch({ type: "search", payload: e.target.value }), [])
     const handleFilter = React.useCallback((value: unknown) => dispatch({ type: "setFilterStatus", payload: value as unknown as boolean }), [])
-    return { setLimit, goToPage, handleSearch, handleFilter, state }
+    return { setLimit, goToPage, handleSearch, handleFilter, state , dispatch}
 }

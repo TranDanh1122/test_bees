@@ -17,8 +17,6 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 { type: state.sort, key: "name" },
                 state.filter as unknown as { [key: string]: any[] })
-            console.log("action.payload.users", result);
-
             return { ...state, result: result, users: action.payload.users, total: total, numberOfPage: numberOfPage }
         }
         case "setStatus": {
@@ -52,7 +50,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 { type: state.sort, key: "name" },
                 newFilter as unknown as { [key: string]: any[] })
-            return { ...state, total: total, numberOfPage: numberOfPage, result: result, filter: newFilter, page : 1 }
+            return { ...state, total: total, numberOfPage: numberOfPage, result: result, filter: newFilter, page: 1 }
 
         }
         case "goToPage": {
@@ -75,6 +73,16 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.filter as unknown as { [key: string]: any[] })
             return { ...state, search: action.payload, total: total, numberOfPage: numberOfPage, page: 1, result: result }
         }
+        case "reset": {
+            const { result, numberOfPage, total } = filter<TUser>(
+                state.users,
+                1,
+                state.limit,
+                state.search,
+                { type: state.sort, key: "name" },
+                state.filter as unknown as { [key: string]: any[] })     
+            return { ...state, page: 1, result: result, total: total, numberOfPage: numberOfPage }
+        }
     }
 }
 export default function useUserList(initData: UserListState) {
@@ -88,6 +96,7 @@ export default function useUserList(initData: UserListState) {
             });
         }
     }, [users]);
+
     React.useEffect(() => { //set lại status khi có sự cập nhật loading / error
         dispatch({
             type: "setStatus",

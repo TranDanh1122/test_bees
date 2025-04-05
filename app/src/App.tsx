@@ -30,11 +30,12 @@ function App() {
 
   return (
     <AppLayout>
-      <ViewModeContextProvider>
-        <UserListContextProvider>
+      <UserListContextProvider>
+        <ViewModeContextProvider>
           <UserList />
-        </UserListContextProvider>
-      </ViewModeContextProvider>
+        </ViewModeContextProvider>
+      </UserListContextProvider>
+
     </AppLayout>
   )
 }

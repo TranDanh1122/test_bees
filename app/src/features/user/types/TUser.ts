@@ -13,6 +13,7 @@ interface TUser {
     balance: number
     email: string
     registerAt: Date
-    active: boolean
+    active: boolean,
+    image? : string
 }
 export default TUser
