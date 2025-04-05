@@ -7,15 +7,17 @@ import {
     SelectValue,
 } from "@/components/ui/select"
 import { Label } from "@/components/ui/label";
-import { UserListContext } from "@/features/user";
 /**
  * 
  *  React component cho phần chọn số lượng hàng hiển thị trên 1 trang
  */
-export default function RowPerPage(): React.JSX.Element {
-    const { state, dispatch } = React.useContext(UserListContext)
+interface Props {
+    onSetLimit: (value: string) => void,
+    limit: number
+}
+export default React.memo(function RowPerPage({ onSetLimit, limit }: Props): React.JSX.Element {
     return (
-        <Select defaultValue={`${state.limit}`} onValueChange={(value) => dispatch({ type: "setLimit", payload: Number(value) })}>
+        <Select defaultValue={limit.toString()} onValueChange={onSetLimit}>
             <div className="flex items-center gap-2">
                 <Label>Rows Per Page:</Label>
                 <SelectTrigger className="w-fit focus-visible:ring-0">
@@ -31,4 +33,4 @@ export default function RowPerPage(): React.JSX.Element {
         </Select>
 
     )
-}
+})

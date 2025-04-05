@@ -6,6 +6,7 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { PlusCircle } from "lucide-react"
+import React from "react"
 type values = { text: string, value: unknown }
 interface Props {
     label: string,
@@ -17,7 +18,7 @@ interface Props {
  * React component chọn 1 hoặc nhiều filter cho user list
  *  
  */
-export default function Filter({ label, values, checked, onCheck }: Props): React.JSX.Element {    
+export default React.memo(function Filter({ label, values, checked, onCheck }: Props): React.JSX.Element {        
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -55,4 +56,4 @@ export default function Filter({ label, values, checked, onCheck }: Props): Reac
             </DropdownMenuContent>
         </DropdownMenu>
     )
-}
+})
