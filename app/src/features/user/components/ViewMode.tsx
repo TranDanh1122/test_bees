@@ -7,13 +7,19 @@ import { ViewModeContext } from "@/features/user";
  */
 export default React.memo(function ViewMode(): React.JSX.Element {
     const { mode, setMode } = React.useContext(ViewModeContext)
+    const changeMode = (mode: string) => {
+        setMode((prev) => {
+            if (prev != mode) return mode
+            return prev
+        })
+    }
     return (
         <div className="flex items-center gap-2">
-            <span className="border border-[var(--hover-color)] rounded-sm size-none p-1">
-                <Table className={`size-4 ${mode == "table" ? "text-[var(--hover-color)]" : "text-neutral-400"}`} />
+            <span onClick={(e) => { e.stopPropagation(); changeMode("table") }} className={`border ${mode == "table" ? "border-[var(--hover-color)]" : "border-neutral-400"} rounded-sm size-none p-1`}>
+                <Table onClick={(e) => { e.stopPropagation(); changeMode("table") }} className={`size-4 ${mode == "table" ? "text-[var(--hover-color)]" : "text-neutral-400"}`} />
             </span>
-            <span className="border border-neutral-400 rounded-sm size-none p-1">
-                <List className={`size-4 ${mode == "list" ? "text-[var(--hover-color)]" : "text-neutral-400"}`} />
+            <span onClick={(e) => { e.stopPropagation(); changeMode("list") }} className={`border ${mode == "list" ? "border-[var(--hover-color)]" : "border-neutral-400"} rounded-sm size-none p-1`}>
+                <List onClick={(e) => { e.stopPropagation(); changeMode("list") }} className={`size-4 ${mode == "list" ? "text-[var(--hover-color)]" : "text-neutral-400"}`} />
             </span>
         </div>)
 })

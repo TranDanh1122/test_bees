@@ -23,16 +23,18 @@
     + Viết 1 context khác quản lí theme (dark, light mode)
     + sẽ viết 1 chút testing đơn giản cho thử thách này
 */
-import { UserList, UserListContextProvider } from '@/features/user'
+import { UserList, UserListContextProvider, ViewModeContextProvider } from '@/features/user'
 import AppLayout from './layout/AppLayout'
 
 function App() {
 
   return (
     <AppLayout>
-      <UserListContextProvider>
-        <UserList />
-      </UserListContextProvider>
+      <ViewModeContextProvider>
+        <UserListContextProvider>
+          <UserList />
+        </UserListContextProvider>
+      </ViewModeContextProvider>
     </AppLayout>
   )
 }
