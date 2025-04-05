@@ -25,14 +25,17 @@
 */
 import { UserList, UserListContextProvider, ViewModeContextProvider } from '@/features/user'
 import AppLayout from './layout/AppLayout'
-
+import GlobalLoading from './components/app/GlobalLoading'
+import React from 'react'
 function App() {
 
   return (
     <AppLayout>
       <UserListContextProvider>
         <ViewModeContextProvider>
-          <UserList />
+          <React.Suspense fallback={<GlobalLoading />}>
+            <UserList />
+          </React.Suspense>
         </ViewModeContextProvider>
       </UserListContextProvider>
 
