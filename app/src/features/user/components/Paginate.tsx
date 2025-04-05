@@ -15,7 +15,7 @@ import { UserListContext } from "@/features/user";
  *  
  */
 export default React.memo(function Paginate(): React.JSX.Element {
-    const { state, dispatch } = React.useContext(UserListContext)    
+    const { state, dispatch } = React.useContext(UserListContext)
     const goToPage = (page: number) => {
         if (page >= 1 && page <= state.numberOfPage && page !== state.page) {
             dispatch({ type: "goToPage", payload: page });
@@ -27,16 +27,17 @@ export default React.memo(function Paginate(): React.JSX.Element {
                 <PaginationItem>
                     <PaginationPrevious onClick={() => goToPage(state.page - 1)} />
                 </PaginationItem>
-                {
-                    state.page > 3 &&
-                    <PaginationItem>
-                        <PaginationLink onClick={() => goToPage(1)} > {1}</PaginationLink>
-                    </PaginationItem>
-                }
+
                 {state.page > 2 &&
-                    <PaginationItem>
-                        <PaginationEllipsis />
-                    </PaginationItem>
+                    <>
+                        <PaginationItem>
+                            <PaginationLink onClick={() => goToPage(1)} > {1}</PaginationLink>
+                        </PaginationItem>
+                        <PaginationItem>
+                            <PaginationEllipsis />
+                        </PaginationItem>
+                    </>
+
                 }
                 {
                     state.page > 1 &&
