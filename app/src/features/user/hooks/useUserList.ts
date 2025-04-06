@@ -18,7 +18,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.page,
                 state.limit,
                 state.search,
-                { type: state.sort, key: "name" },
+                state.sort,
                 state.filter as unknown as { [key: string]: any[] })
             return { ...state, result: result, users: action.payload.users, total: total, numberOfPage: numberOfPage, loading: action.payload.loading, error: action.payload.error }
         }
@@ -34,7 +34,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 1,
                 action.payload,
                 state.search,
-                { type: state.sort, key: "name" },
+                state.sort,
                 state.filter as unknown as { [key: string]: any[] })
             return { ...state, result: result, total: total, numberOfPage: numberOfPage, limit: action.payload, page: 1 } //chỗ này mặc định trả về page 1 là dễ nhất
         }
@@ -53,7 +53,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 1,
                 state.limit,
                 state.search,
-                { type: state.sort, key: "name" },
+                state.sort,
                 newFilter as unknown as { [key: string]: any[] })
             return { ...state, total: total, numberOfPage: numberOfPage, result: result, filter: newFilter, page: 1 }
 
@@ -65,7 +65,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 action.payload,
                 state.limit,
                 state.search,
-                { type: state.sort, key: "name" },
+                state.sort,
                 state.filter as unknown as { [key: string]: any[] })
             return { ...state, page: action.payload, total: total, numberOfPage: numberOfPage, result: result, }
         }
@@ -75,9 +75,19 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 1,
                 state.limit,
                 action.payload,
-                { type: state.sort, key: "name" },
+                state.sort,
                 state.filter as unknown as { [key: string]: any[] })
             return { ...state, search: action.payload, total: total, numberOfPage: numberOfPage, page: 1, result: result }
+        }
+        case "sort": {
+            const { result, numberOfPage, total } = filter<TUser>(
+                state.users,
+                state.page,
+                state.limit,
+                state.search,
+                action.payload,
+                state.filter as unknown as { [key: string]: any[] })
+            return { ...state, sort: action.payload, total: total, numberOfPage: numberOfPage, page: 1, result: result }
         }
         case "reset": {
             const { result, numberOfPage, total } = filter<TUser>(
@@ -85,7 +95,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 1,
                 state.limit,
                 state.search,
-                { type: state.sort, key: "name" },
+                state.sort,
                 state.filter as unknown as { [key: string]: any[] })
             return { ...state, page: 1, result: result, total: total, numberOfPage: numberOfPage }
         }

@@ -21,7 +21,7 @@ interface UserListState {
     result: TUser[],
     total: number,
     search: string,
-    sort: "asc" | "desc",
+    sort: { type: "asc" | "desc", key: keyof TUser },
     filter: Filter,
     page: number,
     numberOfPage: number,

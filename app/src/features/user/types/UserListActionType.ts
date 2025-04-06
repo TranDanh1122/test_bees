@@ -11,4 +11,5 @@ type UserListActionType = { type: "initData", payload: { users: TUser[], total: 
     | { type: "setFilterStatus", payload: boolean }
     | { type: "search", payload: string }
     | { type: "reset" }
+    | { type: "sort", payload: { type: "asc" | "desc", key: keyof TUser } }
 export default UserListActionType

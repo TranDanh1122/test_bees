@@ -5,7 +5,7 @@ const defaultState: UserListState = {
     result: [],
     total: 0,
     search: "",
-    sort: "asc",
+    sort: { type: "asc", key: "name" },
     filter: { active: [] },
     page: 1,
     numberOfPage: 1,

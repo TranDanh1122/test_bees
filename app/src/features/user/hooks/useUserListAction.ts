@@ -1,5 +1,5 @@
 import React from "react";
-import { UserListContext } from "@/features/user";
+import { TUser, UserListContext } from "@/features/user";
 /**
  * Custom hook quản lí các hành động với bảng user
  */
@@ -17,5 +17,7 @@ export const useUserListAction = () => {
     }, [state.numberOfPage, state.page])
     const handleSearch = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => dispatch({ type: "search", payload: e.target.value }), [])
     const handleFilter = React.useCallback((value: unknown) => dispatch({ type: "setFilterStatus", payload: value as unknown as boolean }), [])
-    return { setLimit, goToPage, handleSearch, handleFilter, state, dispatch }
+    const handleSort = React.useCallback((value: unknown) => dispatch({ type: "sort", payload: value as { type: "asc" | "desc", key: keyof TUser } }), [])
+
+    return { setLimit, goToPage, handleSearch, handleFilter, state, dispatch, handleSort }
 }

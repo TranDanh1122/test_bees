@@ -18,7 +18,7 @@ interface Props {
  * React component chọn 1 hoặc nhiều filter cho user list
  *  
  */
-export default React.memo(function Filter({ label, values, checked, onCheck }: Props): React.JSX.Element {        
+export default React.memo(function Filter({ label, values, checked, onCheck }: Props): React.JSX.Element {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
