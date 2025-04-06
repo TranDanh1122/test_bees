@@ -10,13 +10,18 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
-import { Button } from "@/components/ui/button";
 
 interface Props {
     user: TUser
 }
 export default React.memo(function UserListItem({ user }: Props): React.JSX.Element {
     const { layout } = React.useContext(LayoutContext)
+    const balance = React.useMemo(() => {
+        return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD"
+        }).format(user.balance)
+    }, [user.balance])
     return (
         <Card>
             <CardHeader className="flex justify-between relative">
@@ -62,6 +67,7 @@ export default React.memo(function UserListItem({ user }: Props): React.JSX.Elem
                 </Popover>
             </CardHeader>
             <CardContent>
+                <p>Balace : {balance}</p>
                 <p>Regiser At : <RegisterDate date={user.registerAt} /></p>
             </CardContent>
         </Card>

@@ -49,7 +49,7 @@ export default React.memo(function UserInfintyList(): React.JSX.Element {
                 <List
                     height={500}
                     itemCount={state.numberOfPage == state.page ? users.length : users.length + 1}
-                    itemSize={layout.screen == "mobile" ? 250 : 150}
+                    itemSize={layout.screen == "mobile" ? 250 : 180}
                     width="100%"
                     onItemsRendered={onItemsRendered}
                     ref={ref}
