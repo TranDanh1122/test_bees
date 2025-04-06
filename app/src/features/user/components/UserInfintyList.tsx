@@ -17,9 +17,11 @@ export default React.memo(function UserInfintyList(): React.JSX.Element {
     }
     const handle = useDebound(fakeFetchAPI, 500)
     const [users, setUser] = React.useState<TUser[]>([])
-    const resetRef = React.useRef<string>(`${state.filter.toString()}_${state.search}_${state.sort.toString()}`)
+    const resetRef = React.useRef<string>(`${JSON.stringify(state.filter)}_${state.search}_${JSON.stringify(state.sort)}`)
     React.useEffect(() => {
-        const currentFiler = `${state.filter.toString()}_${state.search}_${state.sort.toString()}`
+        const currentFiler = `${JSON.stringify(state.filter)}_${state.search}_${JSON.stringify(state.sort)}`
+        console.log(currentFiler);
+        
         if (resetRef.current != currentFiler) {
             setUser((prev) => {
                 if (prev.length > 0) return []
