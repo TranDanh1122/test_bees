@@ -10,6 +10,7 @@ import { filter } from "@/lib/filter"
 const reducer = (state: UserListState, action: UserListActionType) => {
     switch (action.type) {
         case "initData": {
+            if (state.users.every(el => action.payload.users.some(item => el.id == item.id)) && state.total == action.payload.total) return state
             const { result, numberOfPage, total } = filter<TUser>(
                 action.payload.users,
                 state.page,
@@ -17,13 +18,15 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 { type: state.sort, key: "name" },
                 state.filter as unknown as { [key: string]: any[] })
-            return { ...state, result: result, users: action.payload.users, total: total, numberOfPage: numberOfPage }
+            return { ...state, result: result, users: action.payload.users, total: total, numberOfPage: numberOfPage, loading: action.payload.loading, error: action.payload.error }
         }
         case "setStatus": {
+            if (state.loading == action.payload.loading && state.error == action.payload.error) return state
             return { ...state, loading: action.payload.loading, error: action.payload.error }
         }
 
         case "setLimit": {
+            if (state.limit == action.payload) return state
             const { result, numberOfPage, total } = filter<TUser>(
                 state.users,
                 1,
@@ -54,6 +57,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
 
         }
         case "goToPage": {
+            if (state.page == action.payload) return state
             const { result, numberOfPage, total } = filter<TUser>(
                 state.users,
                 action.payload,
@@ -80,7 +84,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.limit,
                 state.search,
                 { type: state.sort, key: "name" },
-                state.filter as unknown as { [key: string]: any[] })     
+                state.filter as unknown as { [key: string]: any[] })
             return { ...state, page: 1, result: result, total: total, numberOfPage: numberOfPage }
         }
     }
@@ -89,19 +93,12 @@ export default function useUserList(initData: UserListState) {
     const { data: users, isLoading, error } = useGetUserQuery()
     const [state, dispatch] = React.useReducer(reducer, initData)
     React.useEffect(() => { //set lại user khi có dữ liệu mới từ api
-        if (users) {
+        if (users && !isLoading) {
             dispatch({
                 type: "initData",
-                payload: { users: users.users ?? [], total: users.total ?? 0 },
+                payload: { users: users.users ?? [], total: users.total ?? 0, loading: isLoading, error: error != null },
             });
         }
-    }, [users]);
-
-    React.useEffect(() => { //set lại status khi có sự cập nhật loading / error
-        dispatch({
-            type: "setStatus",
-            payload: { loading: isLoading, error: error != null },
-        });
-    }, [isLoading, error]);
+    }, [users, isLoading, error]);
     return { state, dispatch }
 }

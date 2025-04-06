@@ -4,7 +4,7 @@ import InfiniteLoader from 'react-window-infinite-loader';
 import { TUser, useUserListAction, UserListItem } from "@/features/user";
 import { useDebound } from "@/hooks/useDebound";
 import { UserItemSkeleton } from "@/features/user/components/skeleton/ListUI"
-export default function UserInfintyList(): React.JSX.Element {
+export default React.memo(function UserInfintyList(): React.JSX.Element {
     const { state, goToPage, dispatch } = useUserListAction()
     const timeoutRef = React.useRef<number | null>(null)
     const fakeFetchAPI = () => {
@@ -15,21 +15,26 @@ export default function UserInfintyList(): React.JSX.Element {
     }
     const handle = useDebound(fakeFetchAPI, 500)
     const [users, setUser] = React.useState<TUser[]>([])
-    React.useLayoutEffect(() => {
-        setUser([])
-        dispatch({ type: "reset" })
-    }, [state.filter, state.search, state.sort, dispatch])
+    const resetRef = React.useRef<string>(`${state.filter.toString()}_${state.search}_${state.sort.toString()}`)
     React.useEffect(() => {
-        setUser((prev) => {
-            const checkDuplicate = state.result.every(el =>
-                users.some(item =>
-                    JSON.stringify(item) === JSON.stringify(el)
-                ))
-            if (checkDuplicate) return prev
-            return [...prev, ...state.result]
-        })
+        const currentFiler = `${state.filter.toString()}_${state.search}_${state.sort.toString()}`
+        if (resetRef.current != currentFiler) {
+            setUser((prev) => {
+                if (prev.length > 0) return []
+                return prev
+            })
+            resetRef.current = currentFiler
+            dispatch({ type: "reset" })
+        } else {
+            setUser((prev) => {
+                const checkDuplicate = state.result.every(el => prev.some(item => item.id === el.id))
+                if (checkDuplicate) return prev
+                return [...prev, ...state.result]
+            })
+        }
         return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current) }
-    }, [state.result])
+    }, [state.result, state.filter, state.search, state.sort])
+
     return (
         <InfiniteLoader
             isItemLoaded={(index: number) => !!users[index]}
@@ -44,6 +49,7 @@ export default function UserInfintyList(): React.JSX.Element {
                     width="100%"
                     onItemsRendered={onItemsRendered}
                     ref={ref}
+                    itemKey={(index) => users[index]?.id ?? `skeleton-${index}`}
                 >
                     {({ index, style }) => {
                         const user = users[index]
@@ -62,4 +68,4 @@ export default function UserInfintyList(): React.JSX.Element {
         </InfiniteLoader>
 
     )
-}
+})

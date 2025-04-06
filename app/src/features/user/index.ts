@@ -24,14 +24,6 @@ export { useUserListAction } from "./hooks/useUserListAction"
  */
 
 // ----------- start: table mode -----------
-export function lazyWithDelay(factory: () => Promise<{ default: React.ComponentType<any> }>, delay = 1000) {
-    return React.lazy(() =>
-      Promise.all([
-        factory(),
-        new Promise(resolve => setTimeout(resolve, delay)) // delay 1s
-      ]).then(([module]) => module)
-    );
-  }
 export const UserTable = React.lazy(() => import("./components/UserTable"))
 export const RegisterDate = React.lazy(() => import("./components/RegisterDate"))
 export const Paginate = React.lazy(() => import("./components/Paginate"))

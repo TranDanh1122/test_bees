@@ -4,7 +4,7 @@ import { TUser } from "@/features/user"
  * @description: Liệt kê các hành động có thể truyền vào reducer
  * 
  */
-type UserListActionType = { type: "initData", payload: { users: TUser[], total: number } }
+type UserListActionType = { type: "initData", payload: { users: TUser[], total: number, loading: boolean, error: boolean } }
     | { type: "setStatus", payload: { loading: boolean, error: boolean } }
     | { type: "goToPage", payload: number }
     | { type: "setLimit", payload: number }

@@ -3,7 +3,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 // Skeleton for the entire user list
 export const UserListSkeleton = ({ count = 5 }: { count?: number }) => {
     return (
-        <div className="w-full max-h-[400px] overflow-y-auto border rounded-lg p-4 bg-white shadow-sm">
+        <div className="w-full max-h-[400px] overflow-y-auto border rounded-lg p-4 bg-white dark:bg-neutral-800 shadow-sm">
             <div className="flex flex-col gap-2">
                 {Array.from({ length: count }).map((_, i) => (
                     <UserItemSkeleton key={i} />

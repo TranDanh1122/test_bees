@@ -7,7 +7,8 @@ import { Ellipsis } from "lucide-react";
 interface Props {
     user: TUser
 }
-export default function UserListItem({ user }: Props): React.JSX.Element {
+export default React.memo(function UserListItem({ user }: Props): React.JSX.Element {
+    
     return (
         <Card>
             <CardHeader className="flex justify-between">
@@ -44,4 +45,4 @@ export default function UserListItem({ user }: Props): React.JSX.Element {
             </CardContent>
         </Card>
     )
-}
+})

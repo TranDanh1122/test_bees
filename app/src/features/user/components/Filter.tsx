@@ -33,7 +33,7 @@ export default React.memo(function Filter({ label, values, checked, onCheck }: P
                             {
                                 checked.map((el, index) => {
                                     const text = values.find((val) => val.value == el)?.text
-                                    return <span key={index} className="text-xs p-1 bg-neutral-200 text-neutral-500 rounded-sm">{text}</span>
+                                    return <span key={index} className="text-xs p-1 bg-neutral-200 dark:bg-neutral-500 text-neutral-500 dark:text-neutral-200 rounded-sm">{text}</span>
                                 })
                             }
 

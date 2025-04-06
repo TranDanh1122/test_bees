@@ -1,10 +1,11 @@
 import React from "react";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { TUser, UserListContext, UserListFooter, UserTableItem } from "@/features/user"
+import { TUser, UserListFooter, UserTableItem, useUserListAction } from "@/features/user"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label";
-export default function UserTable(): React.JSX.Element {
-    const { state } = React.useContext(UserListContext)
+export default React.memo(function UserTable(): React.JSX.Element {
+    const { state } = useUserListAction()
+    
     return (<>
         <Table>
             <TableHeader>
@@ -43,4 +44,4 @@ export default function UserTable(): React.JSX.Element {
 
 
     </>)
-}
+})

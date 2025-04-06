@@ -27,19 +27,25 @@ import { UserList, UserListContextProvider, ViewModeContextProvider } from '@/fe
 import AppLayout from './layout/AppLayout'
 import GlobalLoading from './components/app/GlobalLoading'
 import React from 'react'
+import { ThemeContextProvider } from '@/context'
+
 function App() {
-
   return (
-    <AppLayout>
-      <UserListContextProvider>
-        <ViewModeContextProvider>
-          <React.Suspense fallback={<GlobalLoading />}>
-            <UserList />
-          </React.Suspense>
-        </ViewModeContextProvider>
-      </UserListContextProvider>
 
-    </AppLayout>
+    <ThemeContextProvider>
+      <AppLayout>
+        <ViewModeContextProvider>
+          <UserListContextProvider>
+            <React.Suspense fallback={<GlobalLoading />}>
+              <UserList />
+            </React.Suspense>
+          </UserListContextProvider>
+        </ViewModeContextProvider>
+      </AppLayout>
+    </ThemeContextProvider >
+
+
+
   )
 }
 

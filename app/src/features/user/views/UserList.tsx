@@ -4,11 +4,11 @@ import { UserTableSkeleton } from "../components/skeleton/TableUI";
 import { UserListSkeleton } from "../components/skeleton/ListUI";
 export default function UserList(): React.JSX.Element {
     const { mode } = React.useContext(ViewModeContext)
-    const { state } = useUserListAction()
-
+    const { state } = useUserListAction()    
+    
     return (<>
         <UserListAction />
-        <div className="bg-white shadow-2xl rounded-md p-5">
+        <div className="bg-white dark:bg-neutral-800 shadow-2xl rounded-md p-5">
             <React.Suspense fallback={mode == "table" ? <UserTableSkeleton /> : <UserListSkeleton />}>
                 {
                     mode == "table" &&

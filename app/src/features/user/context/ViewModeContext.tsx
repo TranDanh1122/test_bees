@@ -12,7 +12,7 @@ export default function ViewModeContextProvider({ children }: { children: React.
             return mode
         })
     }
-
+    
     return <ViewModeContext.Provider value={{ mode, setMode }}>
         {children}
     </ViewModeContext.Provider>

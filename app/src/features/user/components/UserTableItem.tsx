@@ -14,7 +14,7 @@ interface Props {
  * @prop {TUser} user: thông tin của người dùng
  *  
  */
-export default function UserTableItem({ user }: Props): React.JSX.Element {
+export default React.memo(function UserTableItem({ user }: Props): React.JSX.Element {
     const balance = React.useMemo(() => { //dùng usememo vì cái biến đổi này khá nặng nếu list lớn => chỉ biến 1 lần, ko cần biến lại khi re-render
         return new Intl.NumberFormat("en-US", {
             style: "currency",
@@ -58,4 +58,4 @@ export default function UserTableItem({ user }: Props): React.JSX.Element {
             </TableCell>
         </TableRow>
     )
-}
+})
