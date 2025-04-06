@@ -18,7 +18,7 @@ export default function AppLayout({ children }: Props): React.JSX.Element {
                     <source media="(min-width:768px)" srcSet={`${theme == "light" ? "assets/bg-light.jpg" : "assets/bg-dark.png"}`} />
                     <img src={`${theme == "light" ? "assets/bg-light.jpg" : "assets/bg-dark.png"}`} className="size-full object-cover" />
                 </picture>
-                <main className="lg:w-2/3 mx-auto space-y-6 relative z-10">
+                <main className="lg:w-2/3 w-full lg:p-0 p-3 mx-auto space-y-6 relative z-10">
                     <Header />
                     {children}
                     <Footer />

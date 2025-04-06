@@ -4,9 +4,11 @@ import InfiniteLoader from 'react-window-infinite-loader';
 import { TUser, useUserListAction, UserListItem } from "@/features/user";
 import { useDebound } from "@/hooks/useDebound";
 import { UserItemSkeleton } from "@/features/user/components/skeleton/ListUI"
+import { LayoutContext } from "@/context";
 export default React.memo(function UserInfintyList(): React.JSX.Element {
     const { state, goToPage, dispatch } = useUserListAction()
     const timeoutRef = React.useRef<number | null>(null)
+    const { layout } = React.useContext(LayoutContext)
     const fakeFetchAPI = () => {
         if (timeoutRef.current) clearTimeout(timeoutRef.current)
         timeoutRef.current = setTimeout(() => { //giả loading fetch API
@@ -45,7 +47,7 @@ export default React.memo(function UserInfintyList(): React.JSX.Element {
                 <List
                     height={500}
                     itemCount={state.numberOfPage == state.page ? users.length : users.length + 1}
-                    itemSize={150}
+                    itemSize={layout.screen == "mobile" ? 250 : 150}
                     width="100%"
                     onItemsRendered={onItemsRendered}
                     ref={ref}
