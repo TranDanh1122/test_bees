@@ -28,6 +28,7 @@ import AppLayout from './layout/AppLayout'
 import GlobalLoading from './components/app/GlobalLoading'
 import React from 'react'
 import { LayoutContextProvider, ThemeContextProvider } from '@/context'
+import { Toaster } from "@/components/ui/sonner"
 
 function App() {
   console.log("App re-render");
@@ -41,6 +42,7 @@ function App() {
               <React.Suspense fallback={<GlobalLoading />}>
                 <UserList />
               </React.Suspense>
+              <Toaster />
             </ViewModeContextProvider>
           </UserListContextProvider>
         </AppLayout>

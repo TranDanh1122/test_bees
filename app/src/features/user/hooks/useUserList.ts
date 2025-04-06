@@ -1,6 +1,8 @@
 import React from "react"
 import { UserListState, UserListActionType, TUser, useGetUserQuery } from "@/features/user"
 import { filter } from "@/lib/filter"
+import { toast } from "sonner"
+
 /**
  reducer này sẽ nhận vào 1 state và 1 action, sau đó sẽ thực hiện hành động tương ứng với action.type
  * @param state dữ liệu hiện tại của reducer
@@ -94,6 +96,9 @@ export default function useUserList(initData: UserListState) {
     const [state, dispatch] = React.useReducer(reducer, initData)
     React.useEffect(() => { //set lại user khi có dữ liệu mới từ api
         if (users && !isLoading) {
+            if (error != null)
+                toast.error(error.message, { style: { color: "red" } })
+
             dispatch({
                 type: "initData",
                 payload: { users: users.users ?? [], total: users.total ?? 0, loading: isLoading, error: error != null },
