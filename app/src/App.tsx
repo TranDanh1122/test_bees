@@ -30,17 +30,19 @@ import React from 'react'
 import { ThemeContextProvider } from '@/context'
 
 function App() {
+  console.log("App re-render");
+
   return (
 
     <ThemeContextProvider>
       <AppLayout>
-        <ViewModeContextProvider>
-          <UserListContextProvider>
+        <UserListContextProvider>
+          <ViewModeContextProvider>
             <React.Suspense fallback={<GlobalLoading />}>
               <UserList />
             </React.Suspense>
-          </UserListContextProvider>
-        </ViewModeContextProvider>
+          </ViewModeContextProvider>
+        </UserListContextProvider>
       </AppLayout>
     </ThemeContextProvider >
 
