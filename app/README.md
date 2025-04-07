@@ -46,7 +46,7 @@
 - Cấu trúc source được phân theo features/pages, phù hợp để triển khai `react-router-dom` sau này
 
 ## Demo
-- Mở `[Demo Vercel](https://test-bees.vercel.app/)` để xem tính năng mà không cần cài đặt.  
+- Mở (https://test-bees.vercel.app/)[Demo Vercel] để xem tính năng mà không cần cài đặt.  
 - Thử các tính năng:  
   - Search theo name, filter theo status.  
   - Sort theo name, email, balance (asc/desc).  
