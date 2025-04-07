@@ -5,6 +5,8 @@ import { TUser, useUserListAction, UserListItem } from "@/features/user";
 import { useDebound } from "@/hooks/useDebound";
 import { UserItemSkeleton } from "@/features/user/components/skeleton/ListUI"
 import { LayoutContext } from "@/context";
+import isEqual from 'lodash/isEqual'
+
 export default React.memo(function UserInfintyList(): React.JSX.Element {
     const { state, goToPage, dispatch } = useUserListAction()
     const timeoutRef = React.useRef<number | null>(null)
@@ -17,12 +19,11 @@ export default React.memo(function UserInfintyList(): React.JSX.Element {
     }
     const handle = useDebound(fakeFetchAPI, 500)
     const [users, setUser] = React.useState<TUser[]>([])
-    const resetRef = React.useRef<string>(`${JSON.stringify(state.filter)}_${state.search}_${JSON.stringify(state.sort)}`)
+    const resetRef = React.useRef({ filter: state.filter, searcg: state.search, sort: state.sort })
     React.useEffect(() => {
-        const currentFiler = `${JSON.stringify(state.filter)}_${state.search}_${JSON.stringify(state.sort)}`
-        console.log(currentFiler);
-        
-        if (resetRef.current != currentFiler) {
+        const currentFiler = { filter: state.filter, searcg: state.search, sort: state.sort }
+        console.log(currentFiler, resetRef.current, 1234);
+        if (!isEqual(resetRef.current, currentFiler)) {
             setUser((prev) => {
                 if (prev.length > 0) return []
                 return prev
