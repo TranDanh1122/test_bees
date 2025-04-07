@@ -22,23 +22,27 @@ export function filter<T extends Record<string, any>>(
         let result: T[] = [...data]
 
         //Filter 
-        if (filter) {
-            for (const key in filter) {
-                if (filter[key].length > 0) {
+        // if (filter) {
+        //     for (const key in filter) {
+        //         if (filter[key].length > 0) {
 
-                    result = result.filter((el: T) => {
-                        return filter[key].some((val: any) => val === el[key]);
-                    });
-                }
-            }
-        }
+        //             result = result.filter((el: T) => {
+        //                 return filter[key].some((val: any) => val === el[key]);
+        //             });
+        //         }
+        //     }
+        // }
 
         //Search
-        if (search) {
-            result = result.filter(el => {
-                return Object.values(el).some((val) => {
-                    return typeof val == "string" ? val.toLowerCase().includes(search.toLowerCase()) : false
-                })
+        if (search || filter) {
+            const searchChar = search?.toLowerCase() || ""
+            result = result.filter((el: T) => {
+                let isMatchFilter = true
+                if (filter && Object.keys(filter).length > 0)
+                    for (const key in filter) {
+                        if (filter[key].length > 0) isMatchFilter = filter[key].some((val: any) => val === el[key]);
+                    }
+                return (el.name.includes(searchChar) || el.email.includes(searchChar)) && isMatchFilter
             })
         }
         //Sort 
