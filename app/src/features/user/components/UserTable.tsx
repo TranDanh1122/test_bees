@@ -5,7 +5,8 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { Label } from "@/components/ui/label";
 export default React.memo(function UserTable(): React.JSX.Element {
     const { state } = useUserListAction()
-    
+    console.log(state.result);
+
     return (<>
         <Table>
             <TableHeader>
@@ -23,16 +24,16 @@ export default React.memo(function UserTable(): React.JSX.Element {
             </TableHeader>
             <TableBody>
                 {
-                    !state.result &&
+                    (!state.result || state.result.length == 0) &&
                     <TableRow aria-colspan={6}>
                         <TableCell colSpan={6}>
-                            <p className="text-center"> No data</p>
+                            <p className="text-center font-extrabold"> No data</p>
                         </TableCell>
                     </TableRow>
 
                 }
                 {
-                    state.result &&
+                    (state.result && state.result.length > 0) &&
                     state.result.map((el: TUser) => <UserTableItem key={el.id} user={el} />)
                 }
 
