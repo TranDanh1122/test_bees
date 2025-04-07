@@ -28,5 +28,6 @@ interface UserListState {
     limit: number,
     loading: boolean,
     error: boolean,
+    listResult: TUser[]
 }
 export default UserListState

@@ -20,7 +20,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 state.sort,
                 state.filter as unknown as { [key: string]: any[] })
-            return { ...state, result: result, users: action.payload.users, total: total, numberOfPage: numberOfPage, loading: action.payload.loading, error: action.payload.error }
+            return { ...state, result: result, users: action.payload.users, total: total, numberOfPage: numberOfPage, loading: action.payload.loading, error: action.payload.error, listResult: [...result] }
         }
         case "setStatus": {
             if (state.loading == action.payload.loading && state.error == action.payload.error) return state
@@ -55,7 +55,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 state.sort,
                 newFilter as unknown as { [key: string]: any[] })
-            return { ...state, total: total, numberOfPage: numberOfPage, result: result, filter: newFilter, page: 1 }
+            return { ...state, total: total, numberOfPage: numberOfPage, result: result, filter: newFilter, page: 1, listResult: [...result] }
 
         }
         case "goToPage": {
@@ -67,7 +67,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 state.sort,
                 state.filter as unknown as { [key: string]: any[] })
-            return { ...state, page: action.payload, total: total, numberOfPage: numberOfPage, result: result, }
+            return { ...state, page: action.payload, total: total, numberOfPage: numberOfPage, result: result, listResult: [...state.listResult, ...result] }
         }
         case "search": {
             const { result, numberOfPage, total } = filter<TUser>(
@@ -77,7 +77,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 action.payload,
                 state.sort,
                 state.filter as unknown as { [key: string]: any[] })
-            return { ...state, search: action.payload, total: total, numberOfPage: numberOfPage, page: 1, result: result }
+            return { ...state, search: action.payload, total: total, numberOfPage: numberOfPage, page: 1, result: result, listResult: [...result] }
         }
         case "sort": {
             const { result, numberOfPage, total } = filter<TUser>(
@@ -87,7 +87,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 action.payload,
                 state.filter as unknown as { [key: string]: any[] })
-            return { ...state, sort: action.payload, total: total, numberOfPage: numberOfPage, page: 1, result: result }
+            return { ...state, sort: action.payload, total: total, numberOfPage: numberOfPage, page: 1, result: result, listResult: [...result] }
         }
         case "reset": {
             const { result, numberOfPage, total } = filter<TUser>(
@@ -97,7 +97,7 @@ const reducer = (state: UserListState, action: UserListActionType) => {
                 state.search,
                 state.sort,
                 state.filter as unknown as { [key: string]: any[] })
-            return { ...state, page: 1, result: result, total: total, numberOfPage: numberOfPage }
+            return { ...state, page: 1, result: result, total: total, numberOfPage: numberOfPage, listResult: [...result] }
         }
     }
 }

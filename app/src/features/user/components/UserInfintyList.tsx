@@ -1,16 +1,17 @@
 import React from "react";
 import { FixedSizeList as List } from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
-import { TUser, useUserListAction, UserListItem } from "@/features/user";
+import { useUserListAction, UserListItem } from "@/features/user";
 import { useDebound } from "@/hooks/useDebound";
 import { UserItemSkeleton } from "@/features/user/components/skeleton/ListUI"
 import { LayoutContext } from "@/context";
-import isEqual from 'lodash/isEqual'
 
 export default React.memo(function UserInfintyList(): React.JSX.Element {
-    const { state, goToPage, dispatch } = useUserListAction()
+    const { state, goToPage } = useUserListAction()
     const timeoutRef = React.useRef<number | null>(null)
     const { layout } = React.useContext(LayoutContext)
+    const didMountRef = React.useRef(false)
+
     const fakeFetchAPI = () => {
         if (timeoutRef.current) clearTimeout(timeoutRef.current)
         timeoutRef.current = setTimeout(() => { //giả loading fetch API
@@ -18,49 +19,34 @@ export default React.memo(function UserInfintyList(): React.JSX.Element {
         }, 2000)
     }
     const handle = useDebound(fakeFetchAPI, 500)
-    const [users, setUser] = React.useState<TUser[]>([])
-    const resetRef = React.useRef({ filter: state.filter, searcg: state.search, sort: state.sort })
-    React.useEffect(() => {
-        const currentFiler = { filter: state.filter, searcg: state.search, sort: state.sort }
-        console.log(currentFiler, resetRef.current, 1234);
-        if (!isEqual(resetRef.current, currentFiler)) {
-            setUser((prev) => {
-                if (prev.length > 0) return []
-                return prev
-            })
-            resetRef.current = currentFiler
-            dispatch({ type: "reset" })
-        } else {
-            setUser((prev) => {
-                const checkDuplicate = state.result.every(el => prev.some(item => item.id === el.id))
-                if (checkDuplicate) return prev
-                return [...prev, ...state.result]
-            })
-        }
-        return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current) }
-    }, [state.result, state.filter, state.search, state.sort])
 
     return (
         <InfiniteLoader
-            isItemLoaded={(index: number) => !!users[index]}
+            isItemLoaded={(index: number) => (index < state.listResult.length)}
             itemCount={state.total}
-            loadMoreItems={handle}
+            loadMoreItems={() => {
+                if (!didMountRef.current) {
+                    didMountRef.current = true
+                    return Promise.resolve()
+                }
+                return handle()
+            }}
         >
             {({ onItemsRendered, ref }) => (
                 <List
                     height={500}
-                    itemCount={state.numberOfPage == state.page ? users.length : users.length + 1}
+                    itemCount={state.numberOfPage == state.page ? state.listResult.length : state.listResult.length + 1}
                     itemSize={layout.screen == "mobile" ? 250 : 180}
                     width="100%"
                     onItemsRendered={onItemsRendered}
                     ref={ref}
-                    itemKey={(index) => users[index]?.id ?? `skeleton-${index}`}
+                    itemKey={(index) => state.listResult[index]?.id ?? `skeleton-${index}`}
                 >
                     {({ index, style }) => {
-                        const user = users[index]
+                        const user = state.listResult[index]
                         return <div style={style} key={index}>
                             {user &&
-                                <UserListItem user={users[index]} />
+                                <UserListItem user={state.listResult[index]} />
                             }
                             {
                                 !user && <UserItemSkeleton />
