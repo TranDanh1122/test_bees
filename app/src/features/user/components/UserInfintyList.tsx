@@ -8,12 +8,11 @@ import { LayoutContext } from "@/context";
 
 export default React.memo(function UserInfintyList(): React.JSX.Element {
     const { state, goToPage } = useUserListAction()
-    const timeoutRef = React.useRef<number | null>(null)
+    const timeoutRef = React.useRef<NodeJS.Timeout | null>(null)
     const { layout } = React.useContext(LayoutContext)
     const didMountRef = React.useRef(false)
 
     const fakeFetchAPI = () => {
-        alert(1)
         if (timeoutRef.current) clearTimeout(timeoutRef.current)
         timeoutRef.current = setTimeout(() => { //giả loading fetch API
             goToPage(state.page + 1)

@@ -6,7 +6,7 @@ import React from "react"
  * @returns hàm nhận vào các tham số của callback, sẽ thực thi callbacl trong quá trình thực thi (sau debound time)
  */
 export const useDebound = (callback: (...args: any) => void, delay: number) => {
-    const deboundRef = React.useRef<number | null>(null)
+    const deboundRef = React.useRef<null | NodeJS.Timeout>(null)
     const handler = (...args: any) => {
         if (deboundRef.current) clearTimeout(deboundRef.current)
         deboundRef.current = setTimeout(() => {
